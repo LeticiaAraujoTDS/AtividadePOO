@@ -8,7 +8,7 @@ class Ator extends Artista {
 
 
     public function getTipo(): string {
-        return "Ator";
+        return "A";
     }
 
     //GETs & SETs

@@ -7,7 +7,7 @@ class Musico extends Artista {
     private int $numAlbuns;
 
     public function getTipo(): string {
-        return "Músico";
+        return "M";
     }
 
     //GETs & SETs

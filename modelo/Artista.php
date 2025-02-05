@@ -9,6 +9,14 @@ abstract Class Artista {
     protected string $generoPrincipal;
     protected int $idade;
 
+    public function __toString() {
+        return sprintf("%d- %s | %s | %s | %d \n",
+                        $this->id, $this->nome, $this->nomeArtistico,
+                        $this->generoPrincipal, $this->idade );
+        
+    }
+
+
     //Métodos
     public abstract function getTipo();
 

@@ -10,7 +10,7 @@ class ArtistaDAO {
 
     //Método para cadastrar um artista
     public function cadastrarArtista(Artista $artista) {
-        $sql = "INSERT INTO artista (nome_artistico, nome, genero_principal, idade, tipo_artista, tipo_midia, num_participacoes, num_obras, obra_famosa, instrumento, num_albuns)
+        $sql = "INSERT INTO artistas (nome_artistico, nome, genero_principal, idade, tipo_artista, tipo_midia, num_paticipacoes, num_obras, obra_famosa, instrumento, num_albuns)
         VALUES
         (?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -69,7 +69,6 @@ class ArtistaDAO {
         $stm = $con->prepare($sql);
         $stm->execute();
         $registros = $stm->fetchAll();
-
         $artistas = $this->mapArtistas($registros);
         return $artistas;
     }
@@ -79,21 +78,21 @@ class ArtistaDAO {
 
         foreach($registros as $reg){
             $artista = null;
-            if($reg['tipo_artista'] == 'Ator'){
+            if($reg['tipo_artista'] == 'A'){
                 $artista = new Ator();
                 $artista->setTipoMidia($reg['tipo_midia']);
-                $artista->setNumParticipacoes($reg['num_participacoes']);
+                $artista->setNumParticipacoes($reg['num_participacoes'] ?? 0);
             } 
             
-            else if($reg['tipo_artista'] == 'Autor') {
+            else if($reg['tipo_artista'] == 'T') {
                 $artista = new Autor();
                 $artista->setNumObras($reg['num_obras']);
                 $artista->setObraMaisFamosa($reg['obra_famosa']);
             }
             else{
                 $artista = new Musico();
-                $artista->setInstrumento($reg['instrumento']);
-                $artista->setNumAlbuns($reg['num_albuns']);
+                $artista->setInstrumento($reg['instrumento'] ?? "");
+                $artista->setNumAlbuns($reg['num_albuns'] ?? 0);
                 
             }
 
@@ -108,6 +107,34 @@ class ArtistaDAO {
        
         }
         return $artistas;
+    }
+
+    public function buscarPorId(int $id)
+    {
+        $sql = "SELECT * FROM artistas WHERE id = ?";
+
+        $con = Conexao::getCon();
+        $stm = $con->prepare($sql);
+        $stm->execute([$id]);
+        $registro = $stm->fetchAll();
+        $artistas = $this->mapArtistas($registro);
+
+        if (count($artistas)) {
+            return $artistas[0];
+        } else {
+            return null;
+        }
+    }
+
+    public function excluirPorId(int $id){
+
+        $sql = "DELETE FROM artistas WHERE id = ?";
+
+        $con = Conexao::getCon();
+        $stm = $con->prepare($sql);
+        $stm->execute([$id]);
+        
+        return true;
     }
 
 

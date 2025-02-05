@@ -16,9 +16,11 @@ class Conexao {
                //Define o tipo do retorno das consultas
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
     
-            $dadosCon = "mysql:host=localhost:3000;dbname=artistas"; //eu estava usando a porta 3000 mas não ta funcionando
+            $dadosCon = "mysql:host=localhost:3306;dbname=artistas"; //eu estava usando a porta 3000 mas não ta funcionando
+            //Leticia - a minha porta era 3306, ai mudei
     
-            self::$con = new PDO($dadosCon,"root" ,"*******", $opcoes); //tirei minha senha ai precisa por!!
+            self::$con = new PDO($dadosCon,"root" ,"bancodedados", $opcoes); //tirei minha senha ai precisa por!!
+            //mudei para a senha do mysql do lab
 
         }
        

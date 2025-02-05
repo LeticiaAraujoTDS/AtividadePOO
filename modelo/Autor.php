@@ -8,7 +8,7 @@ class Autor extends Artista {
     private string $obraMaisFamosa;
 
     public function getTipo(){
-        return "Autor";
+        return "T";
     }
 
     //GETs & SETs
